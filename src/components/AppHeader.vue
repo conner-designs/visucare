@@ -24,9 +24,9 @@ const showBackToDrains = computed(() => route.name === "drain-side" || route.nam
     </button>
 
     <div class="topbar-title">
-      <p class="eyebrow">Private bedside tool</p>
+      <p class="eyebrow">Post OP Recovery Tool</p>
       <h1>VisuCare</h1>
-      <p class="topbar-subtitle">Local recovery tracking for bedside use</p>
+      <p class="topbar-subtitle">Recovery Tracking Made Easy.</p>
     </div>
 
     <button
