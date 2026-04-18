@@ -16,7 +16,7 @@ const rightLast = computed(() => appStore.getEntriesForSide("right")[0] || null)
   <section class="page-shell">
     <div class="screen-heading">
       <h2>Home</h2>
-      <p class="muted">Clear bedside shortcuts for medications and drains.</p>
+      <p class="muted">Your Post OP Recovery Tracking Made Easy.</p>
     </div>
 
     <div class="stack">
