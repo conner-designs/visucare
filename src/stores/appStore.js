@@ -179,6 +179,10 @@ export function useAppStore() {
         }
       });
   }
+  
+  function getCompleteTotal() {
+    return state.drainEntries.reduce((sum, entry) => sum + entry.amountML, 0);
+  }
 
   return {
     state: readonly(state),
@@ -199,6 +203,7 @@ export function useAppStore() {
     notificationStatus,
     requestPersistentStorage,
     updatePersistenceStatus,
+    getCompleteTotal,
     checkDueMedications
   };
 }
@@ -218,3 +223,4 @@ function persist() {
 
   saveAppState(snapshot);
 }
+
