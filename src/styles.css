@@ -207,8 +207,8 @@ button, input, select {
 }
 
 .summary-sub {
-  font-size: 14px;
-  color: var(--text-muted);
+  font-size: 18px;
+  font-weight: 500px;
 }
 
 .feature-card::before {
