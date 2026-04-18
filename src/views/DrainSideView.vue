@@ -55,11 +55,13 @@ function saveEntry() {
     <section class="list-section">
       <h3>Drain Lines</h3>
       <div class="stack">
-        <BaseCard v-for="drainNumber in [1, 2]" :key="drainNumber" class="drain-unit-card feature-card">
-          <div class="drain-unit-top">
-            <h3 class="drain-unit-title">{{ titleCase(side) }} {{ drainNumber }}</h3>
-            <button class="action-button brand compact-button" type="button" @click="openAdd(drainNumber)">Add Entry</button>
-          </div>
+			  <BaseCard class="drain-unit-card feature-card">
+			    <div class="drain-unit-top">
+			      <h3 class="drain-unit-title">{{ titleCase(side) }}</h3>
+			      <button class="action-button brand compact-button" type="button" @click="openAdd()">
+			        Add Entry
+			      </button>
+			    </div>
           <p class="drain-unit-meta">Today: {{ appStore.getTotalForDayAndNumber(side, drainNumber, 0) }} mL</p>
           <p class="drain-unit-meta">Yesterday: {{ appStore.getTotalForDayAndNumber(side, drainNumber, 1) }} mL</p>
           <p class="drain-unit-meta">
