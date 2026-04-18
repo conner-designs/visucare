@@ -1,4 +1,4 @@
-import { computed, reactive, readonly } from "vue";
+import { computed, reactive, readonly, toRaw } from "vue";
 import { isSameDay } from "../lib/formatters";
 import { loadAppState, saveAppState } from "../lib/localDb";
 
@@ -204,8 +204,17 @@ export function useAppStore() {
 }
 
 function persist() {
-  saveAppState({
-    medications: state.medications,
-    drainEntries: state.drainEntries
-  });
+  const snapshot = {
+    medications: state.medications.map((medication) => ({
+      ...toRaw(medication),
+      history: Array.isArray(medication.history)
+        ? medication.history.map((item) => ({ ...toRaw(item) }))
+        : []
+    })),
+    drainEntries: state.drainEntries.map((entry) => ({
+      ...toRaw(entry)
+    }))
+  };
+
+  saveAppState(snapshot);
 }
