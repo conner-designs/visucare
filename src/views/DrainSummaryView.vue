@@ -22,9 +22,15 @@ function drainLabel(entry) {
 
     <div class="summary-grid">
       <BaseCard class="feature-card">
-        <p class="summary-label">Today Total</p>
-        <p class="summary-value">{{ appStore.getTotalForDay("left", 0) + appStore.getTotalForDay("right", 0) }} mL</p>
-      </BaseCard>
+			  <div class="totals-stack">
+			    <p class="summary-value">
+			      Today Total {{ appStore.getTotalForDay("left", 0) + appStore.getTotalForDay("right", 0) }} mL
+			    </p>
+			    <p class="summary-sub">
+			      Total {{ appStore.getCompleteTotal() }} mL
+			    </p>
+			  </div>
+			</BaseCard>
     </div>
 
     <BaseCard v-if="!entries.length" class="empty-state">
