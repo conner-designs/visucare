@@ -195,6 +195,22 @@ button, input, select {
   overflow: hidden;
 }
 
+.totals-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.summary-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
 .feature-card::before {
   content: "";
   position: absolute;
