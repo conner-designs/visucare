@@ -88,24 +88,6 @@ function confirmMessage() {
       </button>
     </div>
 
-    <BaseCard class="storage-note">
-      <p class="summary-label">Storage</p>
-      <p class="overview-line">
-        Data stays on this device and is not sent to a server.
-      </p>
-      <p class="overview-line">
-        {{ persistentStorageGranted ? "This browser granted stronger local storage protection." : "This browser may still clear local app data if site storage is removed." }}
-      </p>
-      <button
-        v-if="!persistentStorageGranted"
-        class="action-button subtle compact-button"
-        type="button"
-        @click="improveStorage"
-      >
-        Improve Local Storage
-      </button>
-    </BaseCard>
-
     <div v-if="!medications.length" class="stack">
       <BaseCard class="empty-state">No medications added yet.</BaseCard>
     </div>
