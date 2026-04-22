@@ -1,10 +1,14 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
+const deferredInstallPrompt = ref(null);
+const canInstall = ref(false);
+const isInstalled = ref(false);
 
+const showInstall = computed(() => route.name === "home" && canInstall.value && !isInstalled.value);
 const showHome = computed(() => route.name !== "home");
 const showBackButton = computed(() =>
   route.name === "drain-side" ||
@@ -15,6 +19,48 @@ const showBackButton = computed(() =>
 const backTarget = computed(() => {
   if (route.name === "drain-entry-detail") return "/drains/summary";
   return "/drains";
+});
+
+const updateInstalledState = () => {
+  const isStandalone = window.matchMedia?.("(display-mode: standalone)")?.matches;
+  const isIosStandalone = window.navigator.standalone === true;
+  isInstalled.value = Boolean(isStandalone || isIosStandalone);
+};
+
+const handleBeforeInstallPrompt = (event) => {
+  event.preventDefault();
+  deferredInstallPrompt.value = event;
+  canInstall.value = true;
+};
+
+const handleAppInstalled = () => {
+  deferredInstallPrompt.value = null;
+  canInstall.value = false;
+  isInstalled.value = true;
+};
+
+const installApp = async () => {
+  if (deferredInstallPrompt.value) {
+    deferredInstallPrompt.value.prompt();
+    await deferredInstallPrompt.value.userChoice;
+    deferredInstallPrompt.value = null;
+    canInstall.value = false;
+    updateInstalledState();
+    return;
+  }
+
+  window.alert("To add VisuCare to your home screen, open your browser menu or Share button and choose Add to Home Screen.");
+};
+
+onMounted(() => {
+  updateInstalledState();
+  window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  window.addEventListener("appinstalled", handleAppInstalled);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  window.removeEventListener("appinstalled", handleAppInstalled);
 });
 </script>
 
@@ -38,17 +84,34 @@ const backTarget = computed(() => {
       <p class="topbar-subtitle">Recovery Tracking Made Easy.</p>
     </div>
 
-    <button
-      class="icon-button"
-      :class="{ hidden: !showHome }"
-      type="button"
-      aria-label="Home"
-      @click="router.push('/')"
-    >
-      <svg aria-hidden="true" viewBox="0 0 24 24" class="header-icon">
-        <path d="M4 11.5l8-6 8 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
-        <path d="M7 10.5v8h10v-8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
-      </svg>
-    </button>
+    <div class="topbar-actions">
+      <button
+        v-if="showInstall"
+        class="icon-button"
+        type="button"
+        aria-label="Add to Home Screen"
+        @click="installApp"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="header-icon">
+          <path d="M12 15V4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+          <path d="M8.5 7.5L12 4l3.5 3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+          <path d="M5 13.5v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+        </svg>
+      </button>
+
+      <button
+        v-else
+        class="icon-button"
+        :class="{ hidden: !showHome }"
+        type="button"
+        aria-label="Home"
+        @click="router.push('/')"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="header-icon">
+          <path d="M4 11.5l8-6 8 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+          <path d="M7 10.5v8h10v-8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" />
+        </svg>
+      </button>
+    </div>
   </header>
 </template>

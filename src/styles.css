@@ -60,6 +60,11 @@ button, input, select {
   padding: 8px 6px 18px;
 }
 
+.topbar-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .topbar-title {
   min-width: 0;
 }
