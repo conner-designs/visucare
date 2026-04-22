@@ -7,9 +7,9 @@ import DrainSummaryView from "../views/DrainSummaryView.vue";
 import DrainEntryDetailView from "../views/DrainEntryDetailView.vue";
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: "/", name: "home", component: HomeView },
+    { path: "/", alias: "/index.html", name: "home", component: HomeView },
     { path: "/medications", name: "medications", component: MedicationsView },
     { path: "/drains", name: "drains", component: DrainsView },
     { path: "/drains/summary", name: "drain-summary", component: DrainSummaryView },
