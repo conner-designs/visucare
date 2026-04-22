@@ -409,6 +409,14 @@ select {
   min-width: 620px;
 }
 
+.summary-row-link {
+  cursor: pointer;
+}
+
+.summary-row-link:hover {
+  background: rgba(25, 118, 162, 0.04);
+}
+
 .summary-table th,
 .summary-table td {
   padding: 14px 16px;
@@ -434,6 +442,28 @@ select {
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
+}
+
+.detail-card {
+  display: grid;
+  gap: 18px;
+}
+
+.detail-value {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-item {
+  display: grid;
+  gap: 6px;
 }
 
 .summary-table th {
@@ -531,52 +561,26 @@ select {
   }
 
   .summary-table {
-    min-width: 0;
+    min-width: 520px;
   }
 
-  .summary-table thead {
-    display: none;
-  }
-
-  .summary-table tbody {
-    display: grid;
-    gap: 12px;
-    padding: 12px;
-  }
-
-  .summary-table tr {
-    display: grid;
-    gap: 8px;
-    padding: 14px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.72);
-  }
-
+  .summary-table th,
   .summary-table td {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 0;
-    border-bottom: 0;
-    white-space: normal;
+    padding: 12px 10px;
+    font-size: 0.92rem;
   }
 
-  .summary-table td::before {
-    content: attr(data-label);
-    color: var(--muted);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .summary-actions-cell {
-    width: auto;
-    justify-content: flex-end;
-  }
-
-  .summary-actions-cell::before {
+  .summary-col-time,
+  .summary-col-color {
     display: none;
+  }
+
+  .summary-actions-col,
+  .summary-actions-cell {
+    width: 52px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -124,6 +124,10 @@ export function useAppStore() {
       .sort((a, b) => new Date(b.loggedAt) - new Date(a.loggedAt));
   }
 
+  function getDrainEntry(entryId) {
+    return state.drainEntries.find((entry) => entry.id === entryId) || null;
+  }
+
   function getTotalForDay(side, daysAgo) {
     const target = new Date();
     target.setHours(0, 0, 0, 0);
@@ -203,6 +207,7 @@ export function useAppStore() {
     addDrainEntry,
     removeDrainEntry,
     getAllDrainEntries,
+    getDrainEntry,
     getEntriesForSide,
     getEntriesForSideAndNumber,
     getTotalForDay,

@@ -1,17 +1,23 @@
 <script setup>
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 import BaseCard from "../components/BaseCard.vue";
 import BaseModal from "../components/BaseModal.vue";
 import { formatDate, formatTime, titleCase } from "../lib/formatters";
 import { useAppStore } from "../stores/appStore";
 
 const appStore = useAppStore();
+const router = useRouter();
 
 const entries = computed(() => appStore.getAllDrainEntries());
 const entryToRemove = ref(null);
 
 function drainLabel(entry) {
   return `${titleCase(entry.side)} ${entry.drainNumber}`;
+}
+
+function openEntry(entry) {
+  router.push(`/drains/summary/${entry.id}`);
 }
 
 function confirmRemove(entry) {
@@ -34,15 +40,15 @@ function removeEntry() {
 
     <div class="summary-grid">
       <BaseCard class="feature-card">
-			  <div class="totals-stack">
-			    <p class="summary-value">
-			      Today Total {{ appStore.getTotalForDay("left", 0) + appStore.getTotalForDay("right", 0) }} mL
-			    </p>
-			    <p class="summary-sub">
-			      Total {{ appStore.getCompleteTotal() }} mL
-			    </p>
-			  </div>
-			</BaseCard>
+        <div class="totals-stack">
+          <p class="summary-value">
+            Today Total {{ appStore.getTotalForDay("left", 0) + appStore.getTotalForDay("right", 0) }} mL
+          </p>
+          <p class="summary-sub">
+            Total {{ appStore.getCompleteTotal() }} mL
+          </p>
+        </div>
+      </BaseCard>
     </div>
 
     <BaseCard v-if="!entries.length" class="empty-state">
@@ -54,27 +60,32 @@ function removeEntry() {
         <table class="summary-table">
           <thead>
             <tr>
-              <th>Drain</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Color</th>
-              <th>Amount</th>
+              <th class="summary-col-drain">Drain</th>
+              <th class="summary-col-date">Date</th>
+              <th class="summary-col-time">Time</th>
+              <th class="summary-col-color">Color</th>
+              <th class="summary-col-amount">Amount</th>
               <th class="summary-actions-col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="entry in entries" :key="entry.id">
-              <td data-label="Drain">{{ drainLabel(entry) }}</td>
-              <td data-label="Date">{{ formatDate(entry.loggedAt) }}</td>
-              <td data-label="Time">{{ formatTime(entry.loggedAt) }}</td>
-              <td data-label="Color">{{ entry.color }}</td>
-              <td data-label="Amount"><strong>{{ entry.amountML }} mL</strong></td>
-              <td data-label="Remove" class="summary-actions-cell">
+            <tr
+              v-for="entry in entries"
+              :key="entry.id"
+              class="summary-row-link"
+              @click="openEntry(entry)"
+            >
+              <td class="summary-col-drain">{{ drainLabel(entry) }}</td>
+              <td class="summary-col-date">{{ formatDate(entry.loggedAt) }}</td>
+              <td class="summary-col-time">{{ formatTime(entry.loggedAt) }}</td>
+              <td class="summary-col-color">{{ entry.color }}</td>
+              <td class="summary-col-amount"><strong>{{ entry.amountML }} mL</strong></td>
+              <td class="summary-actions-cell">
                 <button
                   class="summary-remove-button"
                   type="button"
                   aria-label="Remove drain entry"
-                  @click="confirmRemove(entry)"
+                  @click.stop="confirmRemove(entry)"
                 >
                   ×
                 </button>
