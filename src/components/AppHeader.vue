@@ -5,10 +5,9 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const deferredInstallPrompt = ref(null);
-const canInstall = ref(false);
 const isInstalled = ref(false);
 
-const showInstall = computed(() => route.name === "home" && canInstall.value && !isInstalled.value);
+const showInstall = computed(() => route.name === "home" && !isInstalled.value);
 const showHome = computed(() => route.name !== "home");
 const showBackButton = computed(() =>
   route.name === "drain-side" ||
@@ -30,12 +29,10 @@ const updateInstalledState = () => {
 const handleBeforeInstallPrompt = (event) => {
   event.preventDefault();
   deferredInstallPrompt.value = event;
-  canInstall.value = true;
 };
 
 const handleAppInstalled = () => {
   deferredInstallPrompt.value = null;
-  canInstall.value = false;
   isInstalled.value = true;
 };
 
@@ -44,7 +41,6 @@ const installApp = async () => {
     deferredInstallPrompt.value.prompt();
     await deferredInstallPrompt.value.userChoice;
     deferredInstallPrompt.value = null;
-    canInstall.value = false;
     updateInstalledState();
     return;
   }
