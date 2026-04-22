@@ -417,6 +417,25 @@ select {
   white-space: nowrap;
 }
 
+.summary-actions-col,
+.summary-actions-cell {
+  width: 64px;
+  text-align: right;
+}
+
+.summary-remove-button {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
 .summary-table th {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
@@ -508,6 +527,56 @@ select {
   }
 
   .topbar-subtitle {
+    display: none;
+  }
+
+  .summary-table {
+    min-width: 0;
+  }
+
+  .summary-table thead {
+    display: none;
+  }
+
+  .summary-table tbody {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .summary-table tr {
+    display: grid;
+    gap: 8px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .summary-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0;
+    border-bottom: 0;
+    white-space: normal;
+  }
+
+  .summary-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .summary-actions-cell {
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  .summary-actions-cell::before {
     display: none;
   }
 }
