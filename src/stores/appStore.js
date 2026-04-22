@@ -100,6 +100,13 @@ export function useAppStore() {
     persist();
   }
 
+  function removeDrainEntry(entryId) {
+    const index = state.drainEntries.findIndex((entry) => entry.id === entryId);
+    if (index === -1) return;
+    state.drainEntries.splice(index, 1);
+    persist();
+  }
+
   function getEntriesForSide(side) {
     return state.drainEntries
       .filter((entry) => entry.side === side)
@@ -194,6 +201,7 @@ export function useAppStore() {
     markMedicationNotNeeded,
     removeMedication,
     addDrainEntry,
+    removeDrainEntry,
     getAllDrainEntries,
     getEntriesForSide,
     getEntriesForSideAndNumber,

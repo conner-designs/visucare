@@ -12,6 +12,7 @@ const props = defineProps({
 
 const appStore = useAppStore();
 const showAdd = ref(false);
+const entryToRemove = ref(null);
 const form = ref({
   drainNumber: 1,
   amountML: "",
@@ -42,6 +43,16 @@ function saveEntry() {
     loggedAt: new Date(form.value.loggedAt).toISOString()
   });
   showAdd.value = false;
+}
+
+function confirmRemove(entry) {
+  entryToRemove.value = entry;
+}
+
+function removeEntry() {
+  if (!entryToRemove.value) return;
+  appStore.removeDrainEntry(entryToRemove.value.id);
+  entryToRemove.value = null;
 }
 </script>
 
@@ -95,6 +106,7 @@ function saveEntry() {
         <BaseCard v-for="entry in entries" :key="entry.id" class="entry-row">
           <div class="entry-top-row">
             <strong>{{ formatTime(entry.loggedAt) }} - {{ entry.amountML }} mL - {{ entry.color }}</strong>
+            <button class="action-button subtle compact-button" type="button" @click="confirmRemove(entry)">Remove</button>
           </div>
           <p class="muted">{{ titleCase(side) }} {{ entry.drainNumber }}</p>
         </BaseCard>
@@ -114,9 +126,10 @@ function saveEntry() {
         <input v-model="form.amountML" type="number" min="0" step="1" inputmode="numeric">
       </div>
       <div class="field">
-        <span>Time</span>
+        <span>Date and Time</span>
         <input v-model="form.loggedAt" type="datetime-local">
       </div>
+      <p class="help-text">Defaults to now. Tap the date and time to add an earlier entry from paper notes.</p>
       <div class="field">
         <span>Color</span>
         <div class="choice-grid">
@@ -135,6 +148,14 @@ function saveEntry() {
       <div class="modal-actions">
         <button class="action-button subtle" type="button" @click="showAdd = false">Cancel</button>
         <button class="action-button brand" type="button" @click="saveEntry">Save</button>
+      </div>
+    </BaseModal>
+
+    <BaseModal :open="!!entryToRemove" title="Remove Drain Entry" @close="entryToRemove = null">
+      <p class="confirm-text">Remove this drain entry from the list?</p>
+      <div class="modal-actions">
+        <button class="action-button subtle" type="button" @click="entryToRemove = null">Cancel</button>
+        <button class="action-button danger" type="button" @click="removeEntry">Remove</button>
       </div>
     </BaseModal>
   </section>
