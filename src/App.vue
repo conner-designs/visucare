@@ -48,12 +48,36 @@ onBeforeUnmount(() => {
 
     <BaseModal :open="activeFooterModal === 'privacy'" title="Privacy" @close="activeFooterModal = null">
       <div class="stack section-gap-sm">
-        <p class="note-body">
-          Lydie is built to keep your tracking private. Your medications, drain entries, and notes are stored on this device only.
-        </p>
-        <p class="note-body">
-          There are no accounts, no ads, no analytics, and no cloud sync in this app.
-        </p>
+        <section class="privacy-section">
+          <h4>Privacy & Data Use</h4>
+          <p>Lydie is designed to keep your information private.</p>
+          <p>All data you enter in the app, including medications, drain entries, and reminders, is stored only on your device.</p>
+          <p>Your information is not sent to any server, database, or third party.</p>
+          <p>The app does not require an account and does not collect personal information such as your name, email, or location.</p>
+          <p>No data is shared, sold, or used for analytics or advertising.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h4>Notifications</h4>
+          <p>If you choose to enable reminders, the app may request permission to send local notifications.</p>
+          <p>These reminders are generated on your device only and are not sent through any external service.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h4>Data Control</h4>
+          <p>You have full control of your data.</p>
+          <p>Removing entries or clearing your browser data will permanently delete stored information.</p>
+          <p>Because data is stored locally, it may be lost if you clear browser storage, uninstall the app, or switch devices.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h4>Medical Disclaimer</h4>
+          <p>Lydie is a support tool only and is not a medical device.</p>
+          <p>It does not provide medical advice, diagnosis, or treatment.</p>
+          <p>Always follow guidance from your doctor or care team.</p>
+          <p>If you have concerns about your recovery, contact a medical professional.</p>
+        </section>
+
         <button class="action-button subtle" type="button" @click="activeFooterModal = null">Close</button>
       </div>
     </BaseModal>
