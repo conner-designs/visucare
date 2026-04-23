@@ -5,8 +5,10 @@
   --ink: #173042;
   --muted: #607889;
   --line: rgba(76, 118, 143, 0.16);
-  --accent: #1976a2;
-  --accent-soft: rgba(25, 118, 162, 0.11);
+  --accent: #4f2a73;
+  --accent-soft: rgba(79, 42, 115, 0.11);
+  --accent-highlight: #efb4c8;
+  --accent-highlight-soft: rgba(239, 180, 200, 0.24);
   --danger: #a84848;
   --danger-soft: rgba(168, 72, 72, 0.12);
   --shadow: 0 18px 42px rgba(32, 78, 106, 0.11);
@@ -241,7 +243,7 @@ button, input, select {
   position: absolute;
   inset: 0 0 auto 0;
   height: 4px;
-  background: linear-gradient(90deg, #78bbd8 0%, #1976a2 100%);
+  background: linear-gradient(90deg, var(--accent-highlight) 0%, var(--accent) 100%);
 }
 
 .overview-title,
@@ -307,9 +309,9 @@ button, input, select {
 
 .nav-tile,
 .action-button.brand {
-  background: linear-gradient(180deg, #2690bf 0%, #1976a2 100%);
+  background: linear-gradient(180deg, #64368e 0%, var(--accent) 100%);
   color: white;
-  box-shadow: 0 12px 26px rgba(25, 118, 162, 0.25);
+  box-shadow: 0 12px 26px rgba(79, 42, 115, 0.26);
 }
 
 .nav-tile {
@@ -321,7 +323,7 @@ button, input, select {
 .action-button.subtle {
   background: rgba(255, 255, 255, 0.9);
   color: var(--accent);
-  border: 1px solid rgba(25, 118, 162, 0.18);
+  border: 1px solid rgba(79, 42, 115, 0.18);
 }
 
 .action-button.danger {
@@ -364,7 +366,7 @@ button, input, select {
   align-items: center;
   border-radius: 999px;
   padding: 8px 12px;
-  background: rgba(25, 118, 162, 0.1);
+  background: var(--accent-highlight-soft);
   color: var(--accent);
   font-weight: 700;
   font-size: 0.9rem;
@@ -410,9 +412,9 @@ select {
 }
 
 .choice-pill.selected {
-  background: rgba(25, 118, 162, 0.14);
+  background: var(--accent-highlight-soft);
   color: var(--accent);
-  border-color: rgba(25, 118, 162, 0.28);
+  border-color: rgba(79, 42, 115, 0.28);
 }
 
 .entry-row strong {
@@ -439,7 +441,7 @@ select {
 }
 
 .summary-row-link:hover {
-  background: rgba(25, 118, 162, 0.04);
+  background: rgba(79, 42, 115, 0.04);
 }
 
 .summary-table th,
@@ -496,7 +498,46 @@ select {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
-  background: rgba(25, 118, 162, 0.06);
+  background: var(--accent-highlight-soft);
+}
+
+textarea {
+  width: 100%;
+  min-height: 132px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: inset 0 1px 2px rgba(25, 66, 90, 0.04);
+  resize: vertical;
+  font: inherit;
+}
+
+.notes-card {
+  display: grid;
+  gap: 12px;
+}
+
+.note-title-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.note-body {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 .summary-table tbody tr:last-child td {

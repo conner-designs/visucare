@@ -66,13 +66,14 @@ export function saveAppState(state) {
 }
 
 function emptyState() {
-  return { medications: [], drainEntries: [] };
+  return { medications: [], drainEntries: [], notes: [] };
 }
 
 function normalizeState(value) {
   if (!value || typeof value !== "object") return emptyState();
   return {
     medications: Array.isArray(value.medications) ? value.medications : [],
-    drainEntries: Array.isArray(value.drainEntries) ? value.drainEntries : []
+    drainEntries: Array.isArray(value.drainEntries) ? value.drainEntries : [],
+    notes: Array.isArray(value.notes) ? value.notes : []
   };
 }

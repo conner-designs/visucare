@@ -5,6 +5,7 @@ import { loadAppState, saveAppState } from "../lib/localDb";
 const state = reactive({
   medications: [],
   drainEntries: [],
+  notes: [],
   hydrated: false,
   persistentStorageGranted: false
 });
@@ -32,6 +33,7 @@ export function useAppStore() {
     const loaded = await loadAppState();
     state.medications = loaded.medications;
     state.drainEntries = loaded.drainEntries;
+    state.notes = loaded.notes;
     state.hydrated = true;
     await updatePersistenceStatus();
   }
@@ -105,6 +107,25 @@ export function useAppStore() {
     if (index === -1) return;
     state.drainEntries.splice(index, 1);
     persist();
+  }
+
+  function addNote({ title, body }) {
+    state.notes.unshift({
+      id: crypto.randomUUID(),
+      title: title.trim(),
+      body: body.trim(),
+      createdAt: new Date().toISOString()
+    });
+    persist();
+  }
+
+  function getAllNotes() {
+    return [...state.notes]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
+
+  function getNote(noteId) {
+    return state.notes.find((note) => note.id === noteId) || null;
   }
 
   function getEntriesForSide(side) {
@@ -206,6 +227,9 @@ export function useAppStore() {
     removeMedication,
     addDrainEntry,
     removeDrainEntry,
+    addNote,
+    getAllNotes,
+    getNote,
     getAllDrainEntries,
     getDrainEntry,
     getEntriesForSide,
@@ -228,6 +252,9 @@ function persist() {
       history: Array.isArray(medication.history)
         ? medication.history.map((item) => ({ ...toRaw(item) }))
         : []
+    })),
+    notes: state.notes.map((note) => ({
+      ...toRaw(note)
     })),
     drainEntries: state.drainEntries.map((entry) => ({
       ...toRaw(entry)

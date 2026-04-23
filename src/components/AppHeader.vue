@@ -76,7 +76,6 @@ onBeforeUnmount(() => {
 
     <div class="topbar-title">
       <p class="eyebrow">Private Recovery Tracker</p>
-      <h1>Lydie</h1>
       <p class="topbar-subtitle">Simple bedside tracking for meds and drains.</p>
     </div>
 
