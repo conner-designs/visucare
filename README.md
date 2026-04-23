@@ -1,6 +1,6 @@
-# VisuCare Vue MVP
+# Lydie Vue MVP
 
-VisuCare is a small, private, local-only recovery tracker for post-surgery patients.
+Lydie is a small, private, local-only recovery tracker for post-surgery patients.
 
 This version is a small Vue app so it can be used on:
 - iPhone

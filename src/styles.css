@@ -125,6 +125,26 @@ button, input, select {
   margin-bottom: 4px;
 }
 
+.home-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.home-brand-copy {
+  min-width: 0;
+}
+
+.home-logo {
+  width: 76px;
+  height: 76px;
+  border-radius: 22px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(25, 118, 162, 0.12);
+  box-shadow: 0 12px 24px rgba(39, 88, 117, 0.12);
+}
+
 .screen-heading h2 {
   font-size: 2rem;
   letter-spacing: -0.02em;
@@ -563,6 +583,16 @@ select {
 
   .topbar-subtitle {
     display: none;
+  }
+
+  .home-brand {
+    align-items: flex-start;
+  }
+
+  .home-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
   }
 
   .summary-table {

@@ -45,7 +45,7 @@ const installApp = async () => {
     return;
   }
 
-  window.alert("To add VisuCare to your home screen, open your browser menu or Share button and choose Add to Home Screen.");
+  window.alert("To add Lydie to your home screen, open your browser menu or Share button and choose Add to Home Screen.");
 };
 
 onMounted(() => {
@@ -75,9 +75,9 @@ onBeforeUnmount(() => {
     </button>
 
     <div class="topbar-title">
-      <p class="eyebrow">Post OP Recovery Tool</p>
-      <h1>VisuCare</h1>
-      <p class="topbar-subtitle">Recovery Tracking Made Easy.</p>
+      <p class="eyebrow">Private Recovery Tracker</p>
+      <h1>Lydie</h1>
+      <p class="topbar-subtitle">Simple bedside tracking for meds and drains.</p>
     </div>
 
     <div class="topbar-actions">

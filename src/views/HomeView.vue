@@ -15,8 +15,13 @@ const rightLast = computed(() => appStore.getEntriesForSide("right")[0] || null)
 <template>
   <section class="page-shell">
     <div class="screen-heading">
-      <h2>Home</h2>
-      <p class="muted">Your Post OP Recovery Tracking Made Easy.</p>
+      <div class="home-brand">
+        <img class="home-logo" src="/icons/lydie-192.png" alt="Lydie logo" />
+        <div class="home-brand-copy">
+          <h2>Lydie</h2>
+          <p class="muted">Private bedside tracking for medications and drains.</p>
+        </div>
+      </div>
     </div>
 
     <div class="stack">
