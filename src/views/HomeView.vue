@@ -1,15 +1,45 @@
 <script setup>
-import { computed } from "vue";
+import { computed, reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import BaseCard from "../components/BaseCard.vue";
-import { formatTime } from "../lib/formatters";
+import BaseModal from "../components/BaseModal.vue";
+import { formatDateTime, formatTime } from "../lib/formatters";
 import { useAppStore } from "../stores/appStore";
 
 const appStore = useAppStore();
+const noteForm = reactive({
+  title: "",
+  body: ""
+});
+const showAddNoteModal = ref(false);
+const selectedNoteId = ref(null);
 
 const nextMedication = computed(() => appStore.activeMedications.value[0] || null);
 const leftLast = computed(() => appStore.getEntriesForSide("left")[0] || null);
 const rightLast = computed(() => appStore.getEntriesForSide("right")[0] || null);
+const notes = computed(() => appStore.getAllNotes());
+const selectedNote = computed(() => (
+  selectedNoteId.value ? appStore.getNote(selectedNoteId.value) : null
+));
+
+function openAddNoteModal() {
+  noteForm.title = "";
+  noteForm.body = "";
+  showAddNoteModal.value = true;
+}
+
+function saveNote() {
+  if (!noteForm.title.trim() || !noteForm.body.trim()) return;
+  appStore.addNote({
+    title: noteForm.title,
+    body: noteForm.body
+  });
+  showAddNoteModal.value = false;
+}
+
+function openNote(noteId) {
+  selectedNoteId.value = noteId;
+}
 </script>
 
 <template>
@@ -59,6 +89,57 @@ const rightLast = computed(() => appStore.getEntriesForSide("right")[0] || null)
         </BaseCard>
         <RouterLink class="nav-tile" to="/drains">Drains</RouterLink>
       </div>
+
+      <div class="home-overview-row">
+        <BaseCard v-if="notes.length" class="notes-card feature-card">
+          <p class="summary-label">Notes</p>
+          <div class="stack compact-stack">
+            <button
+              v-for="note in notes"
+              :key="note.id"
+              class="note-title-button"
+              type="button"
+              @click="openNote(note.id)"
+            >
+              <span>{{ note.title }}</span>
+            </button>
+          </div>
+        </BaseCard>
+        <BaseCard v-else class="overview-card feature-card">
+          <p class="summary-label">Notes</p>
+          <h3 class="overview-title">No notes yet</h3>
+          <p class="overview-line">Add quick reminders or care notes for yourself.</p>
+        </BaseCard>
+
+        <button class="nav-tile" type="button" @click="openAddNoteModal">Notes</button>
+      </div>
     </div>
   </section>
+
+  <BaseModal :open="showAddNoteModal" title="Add Note" @close="showAddNoteModal = false">
+    <div class="field">
+      <span>Title</span>
+      <input v-model="noteForm.title" type="text" maxlength="80" placeholder="Example: Empty left drain" />
+    </div>
+
+    <div class="field">
+      <span>Note</span>
+      <textarea v-model="noteForm.body" rows="5" maxlength="1200" placeholder="Write the note here."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="action-button brand" type="button" :disabled="!noteForm.title.trim() || !noteForm.body.trim()" @click="saveNote">
+        Save Note
+      </button>
+      <button class="action-button subtle" type="button" @click="showAddNoteModal = false">Cancel</button>
+    </div>
+  </BaseModal>
+
+  <BaseModal :open="Boolean(selectedNote)" :title="selectedNote?.title || 'Note'" @close="selectedNoteId = null">
+    <div v-if="selectedNote" class="stack section-gap-sm">
+      <p class="muted">{{ formatDateTime(selectedNote.createdAt) }}</p>
+      <p class="note-body">{{ selectedNote.body }}</p>
+      <button class="action-button subtle" type="button" @click="selectedNoteId = null">Close</button>
+    </div>
+  </BaseModal>
 </template>
