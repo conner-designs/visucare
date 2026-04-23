@@ -44,6 +44,9 @@ button, input, select {
 .app-shell {
   max-width: var(--max-width);
   margin: 0 auto;
+  min-height: calc(100vh - 46px);
+  display: flex;
+  flex-direction: column;
 }
 
 .app-stage {
@@ -116,6 +119,25 @@ button, input, select {
 
 .screen-container {
   min-height: 70vh;
+  flex: 1;
+}
+
+.app-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 6px 0;
+}
+
+.footer-link {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(79, 42, 115, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .page-shell {
