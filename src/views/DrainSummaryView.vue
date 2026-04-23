@@ -35,24 +35,24 @@ function removeEntry() {
   <section class="page-shell">
     <div class="screen-heading">
       <h2>Drain Summary</h2>
-      <p class="muted">Easy-to-read drain history by side, drain number, time, color, and amount.</p>
+      <p class="muted">A simple history of what you have logged, newest entries first.</p>
     </div>
 
     <div class="summary-grid">
       <BaseCard class="feature-card">
         <div class="totals-stack">
           <p class="summary-value">
-            Today Total {{ appStore.getTotalForDay("left", 0) + appStore.getTotalForDay("right", 0) }} mL
+            Today: {{ appStore.getTotalForDay("left", 0) + appStore.getTotalForDay("right", 0) }} mL
           </p>
           <p class="summary-sub">
-            Total {{ appStore.getCompleteTotal() }} mL
+            All entries: {{ appStore.getCompleteTotal() }} mL
           </p>
         </div>
       </BaseCard>
     </div>
 
     <BaseCard v-if="!entries.length" class="empty-state">
-      No drain entries yet.
+      No drain entries yet. Add one from the left or right drain screen.
     </BaseCard>
 
     <BaseCard v-else class="summary-table-card">
@@ -96,8 +96,8 @@ function removeEntry() {
       </div>
     </BaseCard>
 
-    <BaseModal :open="!!entryToRemove" title="Remove Drain Entry" @close="entryToRemove = null">
-      <p class="confirm-text">Remove this drain entry from the summary?</p>
+    <BaseModal :open="!!entryToRemove" title="Remove Entry" @close="entryToRemove = null">
+      <p class="confirm-text">Remove this drain entry from your history?</p>
       <div class="modal-actions">
         <button class="action-button subtle" type="button" @click="entryToRemove = null">Cancel</button>
         <button class="action-button danger" type="button" @click="removeEntry">Remove</button>

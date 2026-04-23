@@ -10,12 +10,12 @@ const appStore = useAppStore();
   <section class="page-shell">
     <div class="screen-heading">
       <h2>Drains</h2>
-      <p class="muted">Choose a side and check today at a glance.</p>
+      <p class="muted">Choose a side, add a drain amount, or review your recent history.</p>
     </div>
 
     <RouterLink class="summary-link" to="/drains/summary">
       <BaseCard class="drains-summary-button feature-card">
-        <span class="summary-label">Drain Summary</span>
+        <span class="summary-label">At a Glance</span>
         <span class="drains-summary-content">
           <span class="drains-summary-row"><span>Left</span><strong>{{ appStore.getTotalForDay("left", 0) }} mL today</strong></span>
           <span class="drains-summary-row"><span>Right</span><strong>{{ appStore.getTotalForDay("right", 0) }} mL today</strong></span>

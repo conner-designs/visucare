@@ -60,11 +60,11 @@ function removeEntry() {
   <section class="page-shell">
     <div class="screen-heading">
       <h2>{{ titleCase(side) }} Drain</h2>
-      <p class="muted">Track up to two drain lines on the {{ side }} side.</p>
+      <p class="muted">Log amounts for the {{ side }} side. You can choose drain 1 or drain 2 when you add an entry.</p>
     </div>
 
     <section class="list-section">
-      <h3>Drain Lines</h3>
+      <h3>Quick Add</h3>
       <div class="stack">
 			  <BaseCard class="drain-unit-card feature-card">
 			    <div class="drain-unit-top">
@@ -79,7 +79,7 @@ function removeEntry() {
             {{
               appStore.getEntriesForSideAndNumber(side, drainNumber)[0]
                 ? `Last entry: ${appStore.getEntriesForSideAndNumber(side, drainNumber)[0].amountML} mL at ${formatTime(appStore.getEntriesForSideAndNumber(side, drainNumber)[0].loggedAt)} (${appStore.getEntriesForSideAndNumber(side, drainNumber)[0].color})`
-                : "Last entry: None yet"
+                : "No entries yet"
             }}
           </p>
         </BaseCard>
@@ -100,7 +100,7 @@ function removeEntry() {
     <section class="list-section">
       <h3>Recent Entries</h3>
       <div v-if="!entries.length" class="stack">
-        <BaseCard class="empty-state">No entries yet.</BaseCard>
+        <BaseCard class="empty-state">No entries yet. Add one when you are ready.</BaseCard>
       </div>
       <div v-else class="stack">
         <BaseCard v-for="entry in entries" :key="entry.id" class="entry-row">
@@ -122,14 +122,14 @@ function removeEntry() {
         </select>
       </div>
       <div class="field">
-        <span>Amount in mL</span>
+        <span>Amount</span>
         <input v-model="form.amountML" type="number" min="0" step="1" inputmode="numeric">
       </div>
       <div class="field">
         <span>Date and Time</span>
         <input v-model="form.loggedAt" type="datetime-local">
       </div>
-      <p class="help-text">Defaults to now. Tap the date and time to add an earlier entry from paper notes.</p>
+      <p class="help-text">This starts with the current time. Tap the date and time if you are entering something from earlier.</p>
       <div class="field">
         <span>Color</span>
         <div class="choice-grid">
@@ -151,8 +151,8 @@ function removeEntry() {
       </div>
     </BaseModal>
 
-    <BaseModal :open="!!entryToRemove" title="Remove Drain Entry" @close="entryToRemove = null">
-      <p class="confirm-text">Remove this drain entry from the list?</p>
+    <BaseModal :open="!!entryToRemove" title="Remove Entry" @close="entryToRemove = null">
+      <p class="confirm-text">Remove this drain entry from your history?</p>
       <div class="modal-actions">
         <button class="action-button subtle" type="button" @click="entryToRemove = null">Cancel</button>
         <button class="action-button danger" type="button" @click="removeEntry">Remove</button>

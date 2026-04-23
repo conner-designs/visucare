@@ -53,8 +53,8 @@ async function improveStorage() {
 }
 
 function lastActionText(medication) {
-  if (!medication.lastActionAt || !medication.lastActionType) return "Last action: None yet";
-  return `Last action: ${medication.lastActionType === "taken" ? "Taken" : "Not Needed"} at ${formatDateTime(medication.lastActionAt)}`;
+  if (!medication.lastActionAt || !medication.lastActionType) return "Nothing logged yet";
+  return `${medication.lastActionType === "taken" ? "Taken" : "Not Needed"} at ${formatDateTime(medication.lastActionAt)}`;
 }
 
 function dueText(medication) {
@@ -62,13 +62,13 @@ function dueText(medication) {
 }
 
 function dueStateLabel(medication) {
-  if (!medication.nextDueAt) return "Waiting";
+  if (!medication.nextDueAt) return "Ready when needed";
   return new Date(medication.nextDueAt).getTime() <= Date.now() ? "Due Now" : "Upcoming";
 }
 
 function confirmMessage() {
-  if (pendingAction.value === "taken") return "Are you sure you took this medication now?";
-  if (pendingAction.value === "notNeeded") return "Are you sure this medication was not needed right now?";
+  if (pendingAction.value === "taken") return "Please confirm that you took this medication now.";
+  if (pendingAction.value === "notNeeded") return "Please confirm that this medication was not needed right now.";
   if (pendingAction.value === "remove") return "Remove this medication from your list?";
   return "";
 }
@@ -78,7 +78,7 @@ function confirmMessage() {
   <section class="page-shell">
     <div class="screen-heading">
       <h2>Medications</h2>
-      <p class="muted">Only local reminders and on-device history.</p>
+      <p class="muted">Keep your medication list close by. Everything stays on this device.</p>
     </div>
 
     <div class="toolbar-row">
@@ -89,7 +89,7 @@ function confirmMessage() {
     </div>
 
     <div v-if="!medications.length" class="stack">
-      <BaseCard class="empty-state">No medications added yet.</BaseCard>
+      <BaseCard class="empty-state">No medications yet. Add one when you are ready.</BaseCard>
     </div>
     <div v-else class="stack">
       <BaseCard v-for="medication in medications" :key="medication.id" class="overview-card medication-card">
@@ -102,7 +102,7 @@ function confirmMessage() {
         <p v-if="medication.doseLabel" class="dose-label">{{ medication.doseLabel }}</p>
         <p><strong>Every {{ medication.intervalHours }} hours</strong></p>
         <p>Next due: {{ dueText(medication) }}</p>
-        <p class="muted">{{ lastActionText(medication) }}</p>
+        <p class="muted">Last: {{ lastActionText(medication) }}</p>
         <div class="stack compact-stack">
           <button class="action-button brand" type="button" @click="openAction(medication, 'taken')">Taken</button>
           <button class="action-button subtle" type="button" @click="openAction(medication, 'notNeeded')">Not Needed</button>
@@ -125,20 +125,20 @@ function confirmMessage() {
       </div>
       <div class="field">
         <span>Dose Label (Optional)</span>
-        <input v-model="form.doseLabel" type="text" autocomplete="off">
+        <input v-model="form.doseLabel" type="text" autocomplete="off" placeholder="Example: 1 tablet or 500 mg">
       </div>
       <div class="field">
-        <span>Interval in Hours</span>
+        <span>How Often</span>
         <input v-model="form.intervalHours" type="number" min="1" step="1" inputmode="numeric">
       </div>
-      <p class="help-text">Next due will appear after the first time this medication is marked as taken.</p>
+      <p class="help-text">Enter the number of hours between doses. The next due time will start after you mark this as taken.</p>
       <div class="modal-actions">
         <button class="action-button subtle" type="button" @click="showAdd = false">Cancel</button>
         <button class="action-button brand" type="button" @click="saveMedication">Save</button>
       </div>
     </BaseModal>
 
-    <BaseModal :open="!!pendingAction" title="Confirm" @close="pendingAction = null">
+    <BaseModal :open="!!pendingAction" title="Just Checking" @close="pendingAction = null">
       <p class="confirm-text">{{ confirmMessage() }}</p>
       <div class="modal-actions">
         <button class="action-button subtle" type="button" @click="pendingAction = null">Cancel</button>
