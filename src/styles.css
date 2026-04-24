@@ -678,13 +678,23 @@ textarea {
   }
 
   .summary-table {
-    min-width: 520px;
+    min-width: 470px;
   }
 
   .summary-table th,
   .summary-table td {
-    padding: 12px 10px;
-    font-size: 0.92rem;
+    padding: 10px 6px;
+    font-size: 0.9rem;
+  }
+
+  .summary-table th:first-child,
+  .summary-table td:first-child {
+    padding-left: 10px;
+  }
+
+  .summary-table th:last-child,
+  .summary-table td:last-child {
+    padding-right: 10px;
   }
 
   .summary-col-time,
@@ -694,7 +704,13 @@ textarea {
 
   .summary-actions-col,
   .summary-actions-cell {
-    width: 52px;
+    width: 42px;
+  }
+
+  .summary-remove-button {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
   }
 
   .detail-grid {
